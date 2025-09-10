@@ -6,6 +6,10 @@
 // 1) Search for "TODO" and implement each function.
 // 2) Build & run:   g++ -std=c++17 -O2 -Wall linked_lists.cpp -o lab && ./lab
 // 3) Do not change function signatures
+#include <iostream>
+#include <string>
+using namespace std;
+
 
 struct User {
     string username;
@@ -19,21 +23,31 @@ struct User {
     }
 };
 
-
-int main() {
-  
-    // Write code here to test your implementation
-    
-    return 0;
-}
-
 // Inserts a new (username, password) at the END of the list.
 // If username already exists, do NOT insert a duplicate; return false.
 // Otherwise insert and return true.
 bool insertUser(User*& head, const string& username, const string& password) {
-    // TODO: implement
-   
-    return false;
+   User* current = head;
+
+	while (current != nullptr) {
+	if (current->username == username){
+	    return false;
+	}
+	current = current->next;
+     }
+	User* newUser = new User(username, password);
+	if(head == nullptr) {
+	    head = newUser;
+	    return true;
+	}
+
+	current = head;
+	while (current->next != nullptr){
+	    current = current->next;
+	}
+	current->next = newUser;
+
+    return true;
 }
 
 // Returns pointer to the node with matching username; otherwise nullptr.
@@ -86,4 +100,18 @@ void printUsers(User* head) {
     
 }
 
+int main() {
+    // Write code here to test your implementation
+	User* head = nullptr;
 
+	cout << (insertUser(head, "alice", "1234") ? "Inserted\n" : "Duplicate\n");
+
+	cout << (insertUser(head, "bob", "abcd") ? "Inserted\n" : "Duplicate\n");
+
+	cout << (insertUser(head, "alice", "xxxx") ? "Inserted\n" : "Duplicate\n");
+
+	cout << (insertUser(head, "Charlie", "pass") ? "Inserted\n" : "Duplicate\n");
+
+	cout << (insertUser(head, "David", "password123") ? "Inserted\n" : "Duplicate\n");
+    return 0;
+}
