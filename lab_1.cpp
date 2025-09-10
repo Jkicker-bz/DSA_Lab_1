@@ -52,8 +52,15 @@ bool insertUser(User*& head, const string& username, const string& password) {
 
 // Returns pointer to the node with matching username; otherwise nullptr.
 User* findUser(User* head, const string& username) {
-    // TODO: implement
-    
+
+    User* current = head;
+	while (current != nullptr) {
+	    if(current->username == username){
+		return current;
+	    }
+	current = current->next;
+	}
+
     return nullptr;
 }
 
@@ -110,8 +117,15 @@ int main() {
 
 	cout << (insertUser(head, "alice", "xxxx") ? "Inserted\n" : "Duplicate\n");
 
-	cout << (insertUser(head, "Charlie", "pass") ? "Inserted\n" : "Duplicate\n");
+	cout << (insertUser(head, "charlie", "pass") ? "Inserted\n" : "Duplicate\n");
 
-	cout << (insertUser(head, "David", "password123") ? "Inserted\n" : "Duplicate\n");
+	cout << (insertUser(head, "david", "password123") ? "Inserted\n" : "Duplicate\n");
+
+	if(findUser(head, "charlie") != nullptr){
+	cout << "User found: " << findUser(head, "charlie")->username << endl;
+	}
+	else
+	cout << "User Not Found\n";
+
     return 0;
 }
