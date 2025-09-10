@@ -79,9 +79,15 @@ bool authenticate(User* head, const string& username, const string& password) {
 // Deletes the FIRST node (head) and updates head. No-op if list is empty.
 // Return true if a node was deleted, false otherwise.
 bool removeFront(User*& head) {
-    // TODO: implement
-    
-    return false;
+    // List is emply no operation
+    if(head == nullptr){
+        return false;
+    }
+
+    User* temp = head;
+    head = head->next;
+    delete temp;
+    return true;
 }
 
 // Deletes the node with matching username (first match only).
@@ -115,6 +121,8 @@ void printUsers(User* head) {
 int main() {
     // Write code here to test your implementation
 	User* head = nullptr;
+	cout << (removeFront(head) ? "User Removed\n" : "Could not remove User since list is empty\n");
+
 
 	cout << (insertUser(head, "alice", "1234") ? "Inserted\n" : "Duplicate\n");
 
@@ -135,5 +143,7 @@ int main() {
 	cout << (authenticate(head, "bob", "password") ? "Login Accepted\n" : "Password or Username is Incorrect\n");
 	cout << (authenticate(head, "bob", "abcd") ? "Login Accepted\n" : "Password or Username is Incorrect\n");
 
+	cout << (removeFront(head) ? "User Removed\n" : "Could not remove User since list is empty\n");
+	
     return 0;
 }
