@@ -151,7 +151,7 @@ void printUsers(User* head) {
 	cout << "User List: ";
 	User* current = head;
 	while (current != nullptr){
-	    cout << "(" << current->username << ", " << current->password << ") -> ";
+	    cout << current->username << " -> ";
 	    current = current->next;
 	}
 	cout << "NULL\n";
