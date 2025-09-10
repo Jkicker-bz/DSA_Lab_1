@@ -93,9 +93,25 @@ bool removeFront(User*& head) {
 // Deletes the node with matching username (first match only).
 // Return true if a node was found & deleted; false if not found.
 bool removeByUsername(User*& head, const string& username) {
-    // TODO: implement
-    
-    return false;
+    // If the node to delete is the head
+       if (head->username == username){
+	User* temp = head;
+	head = head->next;
+	delete temp;
+	return true;
+	}
+
+	User* current = head;
+	   while(current != nullptr){
+		if(current->next != nullptr && current->username == username){
+		    User* temp = current->next;
+		    current->next = current->next->next;
+		    delete temp;
+		    return true;
+		}
+		    current = current->next;
+	    }
+	    return false;
 }
 
 // Deletes ALL nodes and sets head=nullptr. 
@@ -145,5 +161,8 @@ int main() {
 
 	cout << (removeFront(head) ? "User Removed\n" : "Could not remove User since list is empty\n");
 	
+	cout << (removeByUsername(head, "bob") ? "Removed User\n" : "User not Found\n");
+	cout << (removeByUsername(head, "frank") ? "Removed User\n" : "User not Found\n");
+
     return 0;
 }
