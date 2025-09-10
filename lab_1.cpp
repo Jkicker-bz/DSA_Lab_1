@@ -102,8 +102,8 @@ bool removeByUsername(User*& head, const string& username) {
 	}
 
 	User* current = head;
-	   while(current != nullptr){
-		if(current->next != nullptr && current->username == username){
+	   while(current->next != nullptr){
+		if(current->next->username == username){
 		    User* temp = current->next;
 		    current->next = current->next->next;
 		    delete temp;
@@ -116,22 +116,37 @@ bool removeByUsername(User*& head, const string& username) {
 
 // Deletes ALL nodes and sets head=nullptr. 
 void clearList(User*& head) {
-    // TODO: implement
-    
+    User* current = head;
+	while(current != nullptr){
+	    User* temp = current;
+	    current = current->next;
+	    delete temp;
+	}
+	head = nullptr;
 }
 
 // Returns number of nodes.
 size_t size(User* head) {
-    // TODO: implement
-    
-    return 0;
+    size_t count = 0;
+
+	User* current = head;
+	  while(current != nullptr){
+	      count++;
+	      current = current->next;
+	  }
+    return count;
 }
 
 // Prints usernames in order, separated by " -> " then " -> NULL".
 // Example: alice -> bob -> charlie -> NULL
 void printUsers(User* head) {
-    // TODO: implement
-    
+	cout << "User List: ";
+	User* current = head;
+	while (current != nullptr){
+	    cout << "(" << current->username << ", " << current->password << ") -> ";
+	    current = current->next;
+	}
+	cout << "NULL\n";
 }
 
 int main() {
@@ -139,30 +154,48 @@ int main() {
 	User* head = nullptr;
 	cout << (removeFront(head) ? "User Removed\n" : "Could not remove User since list is empty\n");
 
-
 	cout << (insertUser(head, "alice", "1234") ? "Inserted\n" : "Duplicate\n");
+	printUsers(head);
 
 	cout << (insertUser(head, "bob", "abcd") ? "Inserted\n" : "Duplicate\n");
+	printUsers(head);
 
 	cout << (insertUser(head, "alice", "xxxx") ? "Inserted\n" : "Duplicate\n");
+	printUsers(head);
 
 	cout << (insertUser(head, "charlie", "pass") ? "Inserted\n" : "Duplicate\n");
+	printUsers(head);
 
 	cout << (insertUser(head, "david", "password123") ? "Inserted\n" : "Duplicate\n");
+	printUsers(head);
+	// Size of the list initially
+	cout << "The size of the list is: " << size(head) << endl;
 
 	if(findUser(head, "charlie") != nullptr){
 	cout << "User found: " << findUser(head, "charlie")->username << endl;
 	}
 	else
 	cout << "User Not Found\n";
-
+	//Authenticating
 	cout << (authenticate(head, "bob", "password") ? "Login Accepted\n" : "Password or Username is Incorrect\n");
 	cout << (authenticate(head, "bob", "abcd") ? "Login Accepted\n" : "Password or Username is Incorrect\n");
-
+	//Removing from front
+	cout << "Now removing user front fromt\n";
 	cout << (removeFront(head) ? "User Removed\n" : "Could not remove User since list is empty\n");
-	
-	cout << (removeByUsername(head, "bob") ? "Removed User\n" : "User not Found\n");
-	cout << (removeByUsername(head, "frank") ? "Removed User\n" : "User not Found\n");
+	printUsers(head);
 
+	cout << "Removing User 'david'\n";
+	cout << (removeByUsername(head, "david") ? "Removed User\n" : "User not Found\n");
+	cout << "Removing User 'frank'\n";
+	cout << (removeByUsername(head, "frank") ? "Removed User\n" : "User not Found\n");
+	printUsers(head);
+	//Size of the List after Deletions
+	cout << "The size of the list is: " << size(head) << endl;
+
+	cout << "Clearing List!\n";
+	clearList(head);
+	//Size of the list after clearing
+	cout << "The size of the list is: " << size(head) << endl;
+	printUsers(head);
     return 0;
 }
